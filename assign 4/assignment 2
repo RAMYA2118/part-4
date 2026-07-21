@@ -1,0 +1,154 @@
+import math
+
+p = 3
+q = 11
+m = 3
+
+if p == q:
+    print("p and q must be different prime numbers")
+    exit()
+
+n = p * q
+phi = (p - 1) * (q - 1)
+
+for e in range(2, phi):
+    if math.gcd(e, phi) == 1:
+        break
+
+for d in range(1, phi):
+    if (d * e) % phi == 1:
+        break
+
+c = pow(m, e, n)
+decrypted = pow(c, d, n)
+
+print("p =", p)
+print("q =", q)
+print("n =", n)
+print("phi =", phi)
+print("e =", e)
+print("d =", d)
+print("Original Message =", m)
+print("Encrypted Message =", c)
+print("Decrypted Message =", decrypted)
+
+input
+p = 5
+q = 17
+m = 8
+
+output
+n = 85
+phi = 64
+e = 3
+d = 43
+Encrypted Message = 2
+Decrypted Message = 8
+
+
+
+
+p = 29
+g = 2
+
+a = 5
+b = 12
+
+A = pow(g, a, p)
+B = pow(g, b, p)
+
+KA = pow(B, a, p)
+KB = pow(A, b, p)
+
+print("Public Prime =", p)
+print("Primitive Root =", g)
+
+print("Alice Private Key =", a)
+print("Bob Private Key =", b)
+
+print("Alice Public Key =", A)
+print("Bob Public Key =", B)
+
+print("Shared Secret (Alice) =", KA)
+print("Shared Secret (Bob) =", KB)
+
+if KA == KB:
+    print("Shared Secret Verified")
+else:
+    print("Shared Secret Not Matched")
+
+    Task 3: Security Principle Mapping (README)
+RSA
+
+RSA provides Confidentiality by encrypting messages so that only the intended receiver can decrypt them using the private key. It also supports Authentication and Non-Repudiation through digital signatures, allowing the sender's identity to be verified.
+
+Diffie-Hellman
+
+Diffie-Hellman provides Secure Key Exchange by allowing two parties to generate the same secret key over an insecure network. It is not an encryption algorithm because it only establishes a shared secret; encryption must be performed using another algorithm such as AES.
+
+Task 4: Threat Model Write-up (README)
+(a) Firewall Placement
+
+The firewall should be placed between the Internet and the CampusConnect application servers. It filters incoming traffic before requests reach the servers.
+
+Rule Example
+
+Allow only HTTPS (TCP Port 443)
+Block all unnecessary incoming ports
+Allow SSH (Port 22) only for administrator IP addresses
+(b) IDS Recommendation
+
+CampusConnect should deploy both Host-based IDS (HIDS) and Network-based IDS (NIDS).
+
+HIDS monitors activities occurring on the server itself, including unauthorized file modifications and suspicious logins.
+
+NIDS monitors traffic flowing across the network and detects attacks such as port scanning and denial-of-service attempts before they reach the servers.
+
+(c) HTTP vs HTTPS
+
+CampusConnect should always use HTTPS instead of HTTP.
+
+HTTPS protects users against Man-in-the-Middle (MITM) attacks by encrypting communication between the client and server using TLS. It also prevents session hijacking and credential theft.
+
+(d) Authentication Design
+
+CampusConnect should implement Multi-Factor Authentication (MFA).
+
+Two authentication factors:
+
+Password
+OTP sent to registered mobile or email
+
+Role permissions:
+
+Student
+
+View assignments
+Submit assignments
+View grades
+
+Instructor
+
+Create assignments
+Grade students
+Manage courses
+
+Administrator
+
+Manage users
+Manage courses
+Configure the system
+
+This follows the Principle of Least Privilege, ensuring each user receives only the permissions required for their role.
+
+(e) Attack Example
+SQL Injection (Active Attack)
+
+An attacker enters malicious SQL commands into the login form to bypass authentication or retrieve confidential database information.
+
+This is classified as an Active Attack because the attacker attempts to modify the system's behavior and manipulate database queries.
+
+Conclusion
+
+RSA provides secure encryption and digital signatures, ensuring confidentiality, authentication, and non-repudiation. Diffie-Hellman securely exchanges cryptographic keys over insecure networks. By deploying HTTPS, firewalls, IDS solutions, and multi-factor authentication while following the principle of least privilege, CampusConnect can protect its users and systems from common cyber threats.
+
